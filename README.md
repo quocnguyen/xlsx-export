@@ -14,28 +14,17 @@ npm test
 
 **Usage**
 
+Exports a xlsx on the fly
+
 ```
-
+const http = require('http')
 var XlsxExport = require('xlsx-export');
-var collection = mongo.collection('someCollection');
+var readStream = mongo.collection('someCollection');
 
-var options = {
-	map: {
-		'date': 'date',
-		'number': 'number',
-		'name': 'string'
-	},
-	headers: [
-				{width: 15, caption: "Awesome Date"},
-				{width: 25, caption: 'Super awesome Number'},
-				{width: 40, caption: 'Super Name'}
-			],
-	stream: collection.stream()
-};
-
-var packer = new XlsxExport(options);
-var stream = packer.pipe(fs.createWriteStream('./test_spread_sheet.xlsx'));
-
+const server = http.createServer(function (req, res) {
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+  XlsxExport(readStream).pipe(res)
+})
 //todo: enjoy!
 
 ```
