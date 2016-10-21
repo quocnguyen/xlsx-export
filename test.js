@@ -1,1 +1,1 @@
-require('./node_modules/mocha/bin/_mocha');
+require('./node_modules/mocha/bin/_mocha')
